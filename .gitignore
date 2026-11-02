@@ -1,0 +1,12 @@
+# Terraform
+
+.terraform/
+*.tfstate
+*tf.state.*
+*tf.plan
+crash.log
+
+#Local credentials and keys
+*.pem
+*.key
+*.pub
