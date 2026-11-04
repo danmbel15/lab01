@@ -1,7 +1,6 @@
 variable "aws_region" {
   description = "The AWS region to deploy resources in"
   type        = list(string)
-  default     = ["us-east-2", "us-east-2-a", "us-west-2-b", "us-west-2-c"]
 }
 
 variable "aws_profile" {
@@ -13,7 +12,11 @@ variable "aws_profile" {
 variable "ssh_cidr" {
   description = "The CIDR block for SSH access"
   type        = string
-  default     = "0.0.0.0/0"
+
+  validation {
+    condition     = can(cidrnetmask(var.ssh_cidr))
+    error_message = "The provided ssh_cidr is not a valid IPv4 CIDR block."
+  }
 }
 
 variable "instance_type" {
