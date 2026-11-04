@@ -2,10 +2,10 @@
 
 .terraform/
 *.tfstate
-*tf.state.*
+*.tfstate.*
 *.tfvars
 *.tfvars.json
-*tf.plan
+*.tf.plan
 crash.log
 
 #Local credentials and keys
