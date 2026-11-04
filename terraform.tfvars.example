@@ -1,0 +1,21 @@
+
+# AWS region where resources will be procured
+aws_region = "us-east-2"
+
+# Availability zones where subnets will be created
+availability_zones = ["a", "b", "c"] 
+
+# AWS IAM profile to be used for authentication
+aws_profile = "terraform-lab"
+
+# Path to the directory where the PUBLIC SSH KEY that will be used to connect is saved
+public_key_path = "~/.ssh/terraform-lab.pub" 
+
+# Public IP in CIDR format
+ssh_cidr = "<YOUR PUBLIC IP>/32"  // try 'curl ifconfig.me' to get your public IP address
+
+# Type of EC2 instance that will be built
+instance_type = "t3.micro" # ex: t3.micro, t2.micro, etc. // check 'https://aws.amazon.com/ec2/instance-types/'
+
+# Name the EC2 instance will have within the AWS dashboard
+instance_name = "learn-terraform"
