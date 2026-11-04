@@ -1,9 +1,9 @@
 provider "aws" {
-  region  = "us-east-2"
-  profile = "terraform-lab" #perfil de AWS IAM que se usará para autenticar
+  region  = var.aws_region[0] #región de AWS donde se crearán los recursos
+  profile = var.aws_profile   #perfil de AWS IAM que se usará para autenticar
 }
 
-data "aws_ami" "ubuntu" { #AMI es la imagen de máquina virtual que se usará para crear la instancia EC2
+data "aws_ami" "ubuntu" { #AMI es[] la imagen de máquina virtual que se usará para crear la instancia EC2
   most_recent = true
 
   filter {
@@ -15,7 +15,7 @@ data "aws_ami" "ubuntu" { #AMI es la imagen de máquina virtual que se usará pa
 
 resource "aws_instance" "app_server" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = var.instance_type
+  instance_type = var.instance_type               #tipo de instancia EC2 que se creará (t3.micro, t2.micro, etc.)
   key_name      = aws_key_pair.terraform.key_name #nombre de la llave SSH que se usará para conectarse a la instancia
 
   vpc_security_group_ids      = [aws_security_group.terraform_lab.id] #asignar el firewall creado a la instancia
@@ -38,7 +38,7 @@ module "vpc" { #crear VPC con subredes públicas y privadas
   name = "terraform-lab-vpc"
   cidr = "10.0.0.0/16" #definir el rango de direcciones IP privadas que se usarán en la VPC
 
-  azs             = ["us-east-2a", "us-east-2b", "us-east-2c"] #azs = Availability Zones, zonas de disponibilidad de AWS donde se crearán las subredes
+  azs             = [var.aws_region[1], var.aws_region[2], var.aws_region[3]] #azs = Availability Zones, zonas de disponibilidad de AWS donde se crearán las subredes
   private_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
   public_subnets  = ["10.0.101.0/24"]
 
@@ -59,8 +59,8 @@ resource "aws_security_group" "terraform_lab" {
 #Permitir tráfico SSH desde la IP del pc
 resource "aws_vpc_security_group_ingress_rule" "allow_ssh" {
   security_group_id = aws_security_group.terraform_lab.id
-  from_port         = 22
-  to_port           = 22
+  from_port         = 22 #ssh default ports
+  to_port           = 22 #ssh default ports
   ip_protocol       = "tcp"
   cidr_ipv4         = var.ssh_cidr #variable que contiene la IP pública del pc en formato CIDR
   description       = "Allow SSH from home"
