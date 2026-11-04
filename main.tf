@@ -1,6 +1,6 @@
 provider "aws" {
-  region  = var.aws_region[0] #región de AWS donde se crearán los recursos
-  profile = var.aws_profile   #perfil de AWS IAM que se usará para autenticar
+  region  = var.aws_region  #región de AWS donde se crearán los recursos
+  profile = var.aws_profile #perfil de AWS IAM que se usará para autenticar
 }
 
 data "aws_ami" "ubuntu" { #AMI es[] la imagen de máquina virtual que se usará para crear la instancia EC2
@@ -27,8 +27,8 @@ resource "aws_instance" "app_server" {
 }
 
 resource "aws_key_pair" "terraform" {
-  key_name   = "terraform-key"                  #nombre de la llave SSH que se creará en AWS
-  public_key = file("~/.ssh/terraform-lab.pub") #ruta al archivo de la llave pública que se usará para crear la llave SSH en AWS
+  key_name   = "terraform-key"                       #nombre de la llave SSH que se creará en AWS
+  public_key = file(pathexpand(var.public_key_path)) #ruta al archivo de la llave pública que se usará para crear la llave SSH en AWS
 }
 
 module "vpc" { #crear VPC con subredes públicas y privadas
@@ -38,7 +38,7 @@ module "vpc" { #crear VPC con subredes públicas y privadas
   name = "terraform-lab-vpc"
   cidr = "10.0.0.0/16" #definir el rango de direcciones IP privadas que se usarán en la VPC
 
-  azs             = [var.aws_region[1], var.aws_region[2], var.aws_region[3]] #azs = Availability Zones, zonas de disponibilidad de AWS donde se crearán las subredes
+  azs             = [var.availability_zones[0], var.availability_zones[1], var.availability_zones[2]] #azs = Availability Zones, zonas de disponibilidad de AWS donde se crearán las subredes
   private_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
   public_subnets  = ["10.0.101.0/24"]
 

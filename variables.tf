@@ -1,12 +1,25 @@
 variable "aws_region" {
   description = "The AWS region to deploy resources in"
+  type        = string
+  default     = "us-east-2"
+}
+
+variable "availability_zones" {
+  description = "The AWS availability zones to deploy resources in"
   type        = list(string)
+  default     = ["a", "b", "c"]
 }
 
 variable "aws_profile" {
   description = "The AWS profile to use for authentication"
   type        = string
-  default     = "terraform-lab"
+  default     = "default"
+}
+
+variable "public_key_path" {
+  description = "The path to the public key for SSH access"
+  type        = string
+  default     = "~/.ssh/terraform-lab.pub"
 }
 
 variable "ssh_cidr" {
