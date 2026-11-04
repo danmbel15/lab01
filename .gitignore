@@ -12,3 +12,5 @@ crash.log
 *.pem
 *.key
 *.pub
+terraform.tfvars
+*tfvars.json
