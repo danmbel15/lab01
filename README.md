@@ -14,7 +14,7 @@ The project is designed to be reusable and configurable through Terraform input 
 ## Architecture
 
 ```mermaid
-flowchat TB
+flowchart TB
     Internet((Internet))
 
     subgraph AWS["AWS Cloud"]
