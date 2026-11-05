@@ -31,17 +31,17 @@ flowchart TB
             end
 
             subgraph PrivateB["Private Subnet - 10.0.2.0/24"]
-                PB["Private Resources]
+                PB["Private Resources"]
             end
+        end
     end
-end
 
-Internet --> IGW
-IGW --> Public
-SG -.-> EC2
+    Internet --> IGW
+    IGW --> Public
+    SG -.-> EC2
 
-style Internet fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
-style EC2 fill:#dcfce7,stroke:#16a34a,color:#14532d
+    style Internet fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
+    style EC2 fill:#dcfce7,stroke:#16a34a,color:#14532d
 ```
 
 ### The infrastructure consists of:
