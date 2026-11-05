@@ -19,11 +19,11 @@ flowchart TB
 
     subgraph AWS["AWS Cloud"]
         subgraph VPC["VPC - 10.0.0.0/16"]
-
             IGW["Internet Gateway"]
 
             subgraph Public["Public Subnet - 10.0.101.0/24"]
-                SG["Security Group<br/>Ubuntu 24.04<br/>t3.micro"]
+                SG["Security Group - SSH TCP 22"]
+                EC2["EC2 Instance - Ubuntu 24.04 - t3.micro"]
             end
 
             subgraph PrivateA["Private Subnet - 10.0.1.0/24"]
@@ -36,9 +36,9 @@ flowchart TB
     end
 end
 
-Internet <--> IGW
+Internet --> IGW
 IGW --> Public
-SG --> EC2
+SG -.-> EC2
 
 style Internet fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
 style EC2 fill:#dcfce7,stroke:#16a34a,color:#14532d
