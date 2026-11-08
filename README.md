@@ -133,6 +133,6 @@ Review the proposed changes and confirm the operation typing '*yes*'.
 - No NAT gateway is provisioned in this lab.
 
 ## Future Improvements:
-- Implement automated Terraform validation using GitHub Actions.
+- ~Implement automated Terraform validation using GitHub Actions.~
 - Improve variable validation and configuration flexibility.
 - Integrate configuration management using Ansible.
