@@ -1,0 +1,35 @@
+name: Terraform Validate Action
+run-name: ${{ github.actor }} is validating Terraform code
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+permissions:
+  contents: read
+jobs:
+  terraform-validate:
+    # The runs-on key specifies the type of virtual machine to use for the job. In this case, it uses the latest version of Ubuntu available on GitHub-hosted runners.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: 1.17.1
+
+      - name: Check Terraform Formatting
+        # -check flag checks if the formatting is correct without making any changes
+        run: terraform fmt -check -recursive
+
+      - name: Initialize Terraform
+        # The -backend=false flag prevents Terraform from configuring the backend, and input=false disables interactive prompts during initialization
+        run: terraform init -backend=false -input=false 
+
+      - name: Validate Terraform Configuration
+        # The -no-color flag removes the color coding quite often used in terminal outputs, making the output more readable in logs and CI/CD pipelines
+        run: terraform validate -no-color
